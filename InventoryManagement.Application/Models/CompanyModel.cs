@@ -1,7 +1,7 @@
 ﻿namespace InventoryManagement.Application.Models
 {
-    public class BaseModel
+    public class CompanyModel : BaseModel
     {
-        public int Id { get; set; }
+
     }
 }

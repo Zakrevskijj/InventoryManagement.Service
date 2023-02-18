@@ -4,6 +4,6 @@ namespace InventoryManagement.Application.Interfaces
 {
     public interface IProductsService
     {
-        public ProductModel CreateProduct(CreateProductModel createProductModel);
+        public Task<ProductModel> CreateProductAsync(ProductModel productModel);
     }
 }

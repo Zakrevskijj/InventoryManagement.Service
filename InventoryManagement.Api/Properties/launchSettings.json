@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "SGTIN.Api": {
+    "InventoryManagement.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

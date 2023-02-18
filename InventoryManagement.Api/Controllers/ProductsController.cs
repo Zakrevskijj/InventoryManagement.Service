@@ -1,3 +1,5 @@
+using AutoMapper;
+using InventoryManagement.Api.Dtos;
 using InventoryManagement.Application.Interfaces;
 using InventoryManagement.Application.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,20 +12,25 @@ namespace InventoryManagement.Api.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductsService _productService;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IProductsService productService)
+        public ProductsController(
+            IProductsService productService,
+            IMapper mapper)
         {
             _productService = productService;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(ProductModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProductDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<ProductModel>> CreateProduct(ProductCreateModel request)
+        public async Task<ActionResult<ProductDto>> CreateProduct(CreateProductDto productDto)
         {
-            var result = await _productService.CreateProduct(request);
+            var productModel = _mapper.Map<ProductModel>(productDto);
+            var result = await _productService.CreateProductAsync(productModel);
 
-            return Ok(result);
+            return Ok(_mapper.Map<ProductDto>(result));
         }
     }
 }
