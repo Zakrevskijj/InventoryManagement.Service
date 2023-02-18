@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGTIN.Api", "SGTIN.Api\SGTIN.Api.csproj", "{1AC5565D-7FA5-4227-8611-5463C848E2FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AC5565D-7FA5-4227-8611-5463C848E2FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC5565D-7FA5-4227-8611-5463C848E2FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC5565D-7FA5-4227-8611-5463C848E2FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC5565D-7FA5-4227-8611-5463C848E2FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4288428F-50E7-4B3F-80A1-02EF22AA46D2}
+	EndGlobalSection
+EndGlobal
