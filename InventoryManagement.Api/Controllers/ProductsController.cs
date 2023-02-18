@@ -1,3 +1,5 @@
+using InventoryManagement.Application.Interfaces;
+using InventoryManagement.Application.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -7,23 +9,11 @@ namespace InventoryManagement.Api.Controllers
     [Route("[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _productService;
+        private readonly IProductsService _productService;
 
-        public ProductsController(IProductService productService)
+        public ProductsController(IProductsService productService)
         {
             _productService = productService;
-        }
-
-        [HttpGet]
-        [ProducesResponseType(typeof(ProductModel), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<IEnumerable<ProductModel>>> GetProducts()
-        {
-            var products = await _productService.GetProductList();
-
-            //mapping here
-
-            return Ok(products);
         }
 
         [HttpPost]
@@ -32,8 +22,6 @@ namespace InventoryManagement.Api.Controllers
         public async Task<ActionResult<ProductModel>> CreateProduct(ProductCreateModel request)
         {
             var result = await _productService.CreateProduct(request);
-
-            //mapping here
 
             return Ok(result);
         }
