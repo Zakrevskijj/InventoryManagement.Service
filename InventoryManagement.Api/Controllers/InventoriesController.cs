@@ -9,5 +9,6 @@ namespace InventoryManagement.Api.Controllers
         public InventoriesController()
         {
         }
+
     }
 }
