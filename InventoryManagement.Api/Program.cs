@@ -1,4 +1,4 @@
-namespace SGTIN.Api
+namespace InventoryManagement.Api
 {
     public class Program
     {
