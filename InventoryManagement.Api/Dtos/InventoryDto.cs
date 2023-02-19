@@ -1,6 +1,6 @@
-﻿namespace InventoryManagement.Core.Entities
+﻿namespace InventoryManagement.Api.Dtos
 {
-    public class Inventory : Entity
+    public class InventoryDto
     {
         public DateTime DateTimeUtc { get; set; }
         public string ExternalId { get; set; }

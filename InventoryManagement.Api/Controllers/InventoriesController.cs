@@ -23,12 +23,45 @@ namespace InventoryManagement.Api.Controllers
         }
 
         [HttpPost]
-        //[ProducesResponseType(typeof(ProductDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(InventoryDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult> CreateInventory(CreateInventoryDto createInventoryDto)
+        public async Task<ActionResult<InventoryDto>> CreateInventory(CreateInventoryDto createInventoryDto)
         {
             var inventoryModel = _mapper.Map<InventoryModel>(createInventoryDto);
-            await _inventoriesService.CreateInventoryAsync(inventoryModel, createInventoryDto.Tags);
+            var result = await _inventoriesService.CreateInventoryAsync(inventoryModel, createInventoryDto.Tags);
+
+            return Ok(_mapper.Map<InventoryDto>(result));
+        }
+
+        [Route("/productsCountPerProduct")]
+        [HttpGet]
+        [ProducesResponseType(typeof(ICollection<ProductCountModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<ICollection<ProductCountModel>>> GetProductsCountPerProductByInventoryExternalId(string externalInventoryId)
+        {
+            var result = await _inventoriesService.GetProductsCountPerProductByInventoryExternalId(externalInventoryId);
+
+            return Ok();
+        }
+
+        [Route("/productsCountPerDayPerProduct")]
+        [HttpGet]
+        [ProducesResponseType(typeof(ICollection<ProductsCountForDayPerProductModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<ICollection<ProductsCountForDayPerProductModel>>> GetProductsCountForDayPerProductModel()
+        {
+            var result = await _inventoriesService.GetProductsCountPerDayPerProduct();
+
+            return Ok();
+        }
+
+        [Route("/productsCountPerCompany")]
+        [HttpGet]
+        [ProducesResponseType(typeof(ICollection<ProductCountModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<ICollection<ProductsCountForCompanyModel>>> GetProductsCountPerCompany()
+        {
+            var result = await _inventoriesService.GetProductsCountPerCompany();
 
             return Ok();
         }

@@ -5,17 +5,17 @@ namespace InventoryManagement.Application
 {
     public class InventoriesService : IInventoriesService
     {
-        public Task CreateInventoryAsync(InventoryModel inventoryModel, ICollection<string> productTags)
+        public Task<InventoryModel> CreateInventoryAsync(InventoryModel inventoryModel, ICollection<string> productTags)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<ProductsCountForCompany>> GetProductsCountPerCompany()
+        public Task<ICollection<ProductsCountForCompanyModel>> GetProductsCountPerCompany()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<ProductsCountForDayModel>> GetProductsCountPerDayPerProduct()
+        public Task<ICollection<ProductsCountForDayPerProductModel>> GetProductsCountPerDayPerProduct()
         {
             throw new NotImplementedException();
         }
