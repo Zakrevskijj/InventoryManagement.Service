@@ -1,3 +1,9 @@
+using InventoryManagement.Application;
+using InventoryManagement.Application.Interfaces;
+using InventoryManagement.Core.Repositories;
+using InventoryManagement.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Hosting;
+
 namespace InventoryManagement.Api
 {
     public class Program
@@ -5,13 +11,21 @@ namespace InventoryManagement.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            var services = builder.Services;
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IProductsRepository, ProductsRepository>();
+            services.AddScoped<IInventoriesRepository, InventoriesRepository>();
+
+            // Add Application Layer
+            services.AddScoped<IProductsService, ProductsService>();
+            services.AddScoped<IInventoriesService, InventoriesService>();
 
             var app = builder.Build();
 

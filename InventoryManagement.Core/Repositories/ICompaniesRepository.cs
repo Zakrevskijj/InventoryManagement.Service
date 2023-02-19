@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.Core.Repositories
 {
-    internal interface ICompaniesRepository : IRepository<Company>
+    public interface ICompaniesRepository : IRepository<Company>
     {
     }
 }

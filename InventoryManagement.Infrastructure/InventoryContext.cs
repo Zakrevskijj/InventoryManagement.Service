@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Infrastructure
 {
-    public class InventoryContext
+    public class InventoryContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
-        public DbSet<Company> Companies { get;set; }
+        public DbSet<Company> Companies { get; set; }
     }
 }
