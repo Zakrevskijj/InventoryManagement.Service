@@ -28,7 +28,7 @@ namespace InventoryManagement.Api.Controllers
         public async Task<ActionResult> CreateInventory(CreateInventoryDto createInventoryDto)
         {
             var inventoryModel = _mapper.Map<InventoryModel>(createInventoryDto);
-            await _inventoriesService.ProcessInventoryDataAsync(inventoryModel, createInventoryDto.Tags);
+            await _inventoriesService.CreateInventoryAsync(inventoryModel, createInventoryDto.Tags);
 
             return Ok();
         }
