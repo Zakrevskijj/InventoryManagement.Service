@@ -22,7 +22,6 @@ namespace InventoryManagement.Api.Controllers
             _mapper = mapper;
         }
 
-
         [HttpPost]
         //[ProducesResponseType(typeof(ProductDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]

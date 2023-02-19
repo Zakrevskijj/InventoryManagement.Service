@@ -5,6 +5,10 @@ namespace InventoryManagement.Infrastructure
 {
     public class InventoryContext : DbContext
     {
+        public InventoryContext(DbContextOptions options) : base(options)
+        {
+        }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<Company> Companies { get; set; }
