@@ -21,12 +21,12 @@ namespace InventoryManagement.Api
             services.AddSwaggerGen();
 
             // InMem DB
-            services.AddDbContext<InventoryContext>(c =>
-                c.UseInMemoryDatabase("DbConnection"));
+            //services.AddDbContext<InventoryContext>(c =>
+            //    c.UseInMemoryDatabase("DbConnection"));
 
             //// Real DB
-            //services.AddDbContext<AspnetRunContext>(c =>
-            //    c.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+            services.AddDbContext<InventoryContext>(c =>
+                c.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProductsRepository, ProductsRepository>();
