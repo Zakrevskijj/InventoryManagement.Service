@@ -10,7 +10,7 @@ namespace InventoryManagement.Application.Mapper
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<DtoMapperProfile>();
+                cfg.AddProfile<ModelsMapperProfile>();
             });
             var mapper = config.CreateMapper();
             return mapper;
@@ -18,14 +18,17 @@ namespace InventoryManagement.Application.Mapper
         public static IMapper Mapper => Lazy.Value;
     }
 
-    public class DtoMapperProfile : Profile
+    public class ModelsMapperProfile : Profile
     {
-        public DtoMapperProfile()
+        public ModelsMapperProfile()
         {
             CreateMap<Product, ProductModel>()
                 .ReverseMap();
 
             CreateMap<Inventory, InventoryModel>()
+                .ReverseMap();
+
+            CreateMap<Company, CompanyModel>()
                 .ReverseMap();
         }
     }

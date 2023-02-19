@@ -28,6 +28,7 @@ namespace InventoryManagement.Api
             services.AddDbContext<InventoryContext>(c =>
                 c.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
 
+            services.AddAutoMapper(typeof(Program));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<IInventoriesRepository, InventoriesRepository>();
