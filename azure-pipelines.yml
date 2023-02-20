@@ -48,5 +48,5 @@ steps:
     azureSubscription: 'Pay-As-You-Go(ae9c086c-0fe1-4380-b1cf-616fe5674cfa)'
     appType: 'webApp'
     appName: 'inventory-management-api'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     deploymentMethod: 'auto'
