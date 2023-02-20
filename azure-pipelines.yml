@@ -41,4 +41,4 @@ steps:
     azureSubscription: 'Pay-As-You-Go(ae9c086c-0fe1-4380-b1cf-616fe5674cfa)'
     appType: 'webApp'
     WebAppName: 'inventory-management-api'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(System.DefaultWorkingDirectory)\InventoryManagement.Service\drop\s\build'
