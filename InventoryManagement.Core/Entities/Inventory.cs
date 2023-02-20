@@ -5,5 +5,6 @@
         public DateTime DateTimeUtc { get; set; }
         public string ExternalId { get; set; }
         public string Location { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }
