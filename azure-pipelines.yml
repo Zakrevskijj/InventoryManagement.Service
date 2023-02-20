@@ -33,6 +33,12 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    artifact: 'inventory-management-api'
+    publishLocation: 'pipeline'
+
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Pay-As-You-Go(ae9c086c-0fe1-4380-b1cf-616fe5674cfa)'
