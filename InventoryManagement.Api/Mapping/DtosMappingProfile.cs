@@ -10,6 +10,9 @@ namespace InventoryManagement.Api.Mapping
         {
             CreateMap<CreateProductDto, ProductModel>().ReverseMap();
             CreateMap<ProductDto, ProductModel>().ReverseMap();
+
+            CreateMap<CreateInventoryDto, InventoryModel>().ReverseMap();
+            CreateMap<InventoryDto, InventoryModel>().ReverseMap();
         }
     }
 }

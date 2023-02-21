@@ -32,6 +32,7 @@ namespace InventoryManagement.Api
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<IInventoriesRepository, InventoriesRepository>();
+            services.AddScoped<ICompaniesRepository, CompaniesRepository>();
 
             // Add Application Layer
             services.AddScoped<IProductsService, ProductsService>();

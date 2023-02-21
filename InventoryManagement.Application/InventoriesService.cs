@@ -3,6 +3,7 @@ using InventoryManagement.Application.Mapper;
 using InventoryManagement.Application.Models;
 using InventoryManagement.Core.Entities;
 using InventoryManagement.Core.Repositories;
+using TagDataTranslation;
 
 namespace InventoryManagement.Application
 {
@@ -36,6 +37,15 @@ namespace InventoryManagement.Application
             foreach (var tag in productTags)
             {
                 //ToDo: Here we get product info from tag
+                TDTEngine engine = new TDTEngine();
+                string epcIdentifier = engine.HexToBinary(tag);
+                string parameterList = @"tagLength=96";
+                string tagData = engine.Translate(epcIdentifier, parameterList, @"TAG_ENCODING");
+                //urn:epc:tag:sgtin-96:4.213645.6152432.887742324
+                tagData = tagData.Remove(0, 21);
+                var arr = tagData.Split('.');
+                var companyPrefix = Int32.Parse(arr[1]);
+                var itemReference= Int32.Parse(arr[2]);
 
                 Company company = await _companiesRepository.GetCompanyByPrefixAsync(66);
                 Product product = await _productsRepository.GetProductByCompanyAndItemReferenceAsync(company.Id, 6688);
