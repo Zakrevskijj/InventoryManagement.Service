@@ -36,19 +36,10 @@ namespace InventoryManagement.Application
 
             foreach (var tag in productTags)
             {
-                //ToDo: Here we get product info from tag
-                TDTEngine engine = new TDTEngine();
-                string epcIdentifier = engine.HexToBinary(tag);
-                string parameterList = @"tagLength=96";
-                string tagData = engine.Translate(epcIdentifier, parameterList, @"TAG_ENCODING");
-                //urn:epc:tag:sgtin-96:4.213645.6152432.887742324
-                tagData = tagData.Remove(0, 21);
-                var arr = tagData.Split('.');
-                var companyPrefix = Int32.Parse(arr[1]);
-                var itemReference= Int32.Parse(arr[2]);
+                var productData = FetchProductData(tag);
 
-                Company company = await _companiesRepository.GetCompanyByPrefixAsync(66);
-                Product product = await _productsRepository.GetProductByCompanyAndItemReferenceAsync(company.Id, 6688);
+                Company company = await _companiesRepository.GetCompanyByPrefixAsync(productData.CompanyPrefix);
+                Product product = await _productsRepository.GetProductByCompanyAndItemReferenceAsync(company.Id, productData.ItemReference);
 
                 //ToDo: Handle errors above
 
@@ -59,6 +50,20 @@ namespace InventoryManagement.Application
 
             var newInventoryModel = ObjectMapper.Mapper.Map<InventoryModel>(newInventoryEntity);
             return newInventoryModel;
+        }
+
+        //ToDo: Move into a separate service
+        private static ProductData FetchProductData(string tag)
+        {
+            TDTEngine engine = new TDTEngine();
+            string epcIdentifier = engine.HexToBinary(tag);
+            string parameterList = @"tagLength=96";
+            string tagData = engine.Translate(epcIdentifier, parameterList, @"TAG_ENCODING");
+
+            tagData = tagData.Remove(0, 21);
+            var arr = tagData.Split('.');
+
+            return new ProductData(int.Parse(arr[1]), int.Parse(arr[2]));
         }
 
         public Task<ICollection<ProductsCountForCompanyModel>> GetProductsCountPerCompany()
@@ -90,6 +95,30 @@ namespace InventoryManagement.Application
                 //ToDo: Throw good exception here
                 throw new Exception($"{inventoryModel} with this id already exists");
             }
+        }
+    }
+
+    internal class ProductData
+    {
+        public int CompanyPrefix { get; }
+        public int ItemReference { get; }
+
+        public ProductData(int companyPrefix, int itemReference)
+        {
+            CompanyPrefix = companyPrefix;
+            ItemReference = itemReference;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ProductData other &&
+                   CompanyPrefix == other.CompanyPrefix &&
+                   ItemReference == other.ItemReference;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(CompanyPrefix, ItemReference);
         }
     }
 }
