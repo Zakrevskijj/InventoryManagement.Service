@@ -8,5 +8,10 @@ namespace InventoryManagement.Infrastructure.Repositories
         public ProductsRepository(InventoryContext dbContext) : base(dbContext)
         {
         }
+
+        public Task<Product> GetProductByCompanyAndItemReferenceAsync(int companyId, int itemReference)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

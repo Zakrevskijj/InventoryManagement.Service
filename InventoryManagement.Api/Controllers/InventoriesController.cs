@@ -41,7 +41,7 @@ namespace InventoryManagement.Api.Controllers
         {
             var result = await _inventoriesService.GetProductsCountPerProductByInventoryExternalId(externalInventoryId);
 
-            return Ok();
+            return Ok(result);
         }
 
         [Route("/productsCountPerDayPerProduct")]
@@ -52,7 +52,7 @@ namespace InventoryManagement.Api.Controllers
         {
             var result = await _inventoriesService.GetProductsCountPerDayPerProduct();
 
-            return Ok();
+            return Ok(result);
         }
 
         [Route("/productsCountPerCompany")]
@@ -63,7 +63,7 @@ namespace InventoryManagement.Api.Controllers
         {
             var result = await _inventoriesService.GetProductsCountPerCompany();
 
-            return Ok();
+            return Ok(result);
         }
     }
 }
