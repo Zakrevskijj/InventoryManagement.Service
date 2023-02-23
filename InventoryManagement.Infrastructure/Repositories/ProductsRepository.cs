@@ -45,13 +45,13 @@ namespace InventoryManagement.Infrastructure.Repositories
             var results = _dbContext.InventoryProducts
                 .Include(x => x.Product)
                 .Include(x => x.Inventory)
-                .GroupBy(x => x.Inventory.DateTimeUtc)
+                .GroupBy(x => x.Inventory.DateTimeUtc.Date)
                 .ToList();
 
             var resultsDictionary = new Dictionary<DateTime, IDictionary<Product, int>>();
-            foreach (var companyProductGroup in results)
+            foreach (var dayProducts in results)
             {
-                //resultsDictionary.Add(companyProductGroup.FirstOrDefault().Company, companyProductGroup.Count());
+                resultsDictionary.Add(dayProducts.Key, dayProducts.ToDictionary(x => x.Product, y => y.Count));
             }
 
             return resultsDictionary;
