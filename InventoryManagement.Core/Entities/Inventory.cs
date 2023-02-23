@@ -6,6 +6,6 @@
         public string ExternalId { get; set; }
         public string Location { get; set; }
 
-        public ICollection<Product> Products { get; set; }
+        public ICollection<InventoryProduct> InventoryProducts { get; set; } = new List<InventoryProduct>();
     }
 }

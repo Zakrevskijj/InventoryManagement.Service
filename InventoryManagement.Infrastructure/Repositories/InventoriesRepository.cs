@@ -1,5 +1,6 @@
 ﻿using InventoryManagement.Core.Entities;
 using InventoryManagement.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Infrastructure.Repositories
 {
@@ -9,9 +10,9 @@ namespace InventoryManagement.Infrastructure.Repositories
         {
         }
 
-        public Task<Inventory> GetInventoryByExternalIdAsync(string externalId)
+        public async Task<Inventory> GetInventoryByExternalIdAsync(string externalId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Inventories.FirstOrDefaultAsync(x => x.ExternalId == externalId);
         }
     }
 }

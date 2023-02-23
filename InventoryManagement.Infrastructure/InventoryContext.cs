@@ -12,5 +12,6 @@ namespace InventoryManagement.Infrastructure
         public DbSet<Product> Products { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<InventoryProduct> InventoryProducts { get; set; }
     }
 }

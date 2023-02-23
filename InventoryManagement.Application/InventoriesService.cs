@@ -34,16 +34,33 @@ namespace InventoryManagement.Application
                 throw new Exception($"Unable to map");
             }
 
+            var productsDictionary = new Dictionary<int, int>();
             foreach (var tag in productTags)
             {
                 var productData = FetchProductData(tag);
 
-                Company company = await _companiesRepository.GetCompanyByPrefixAsync(productData.CompanyPrefix);
-                Product product = await _productsRepository.GetProductByCompanyAndItemReferenceAsync(company.Id, productData.ItemReference);
+                var company = await _companiesRepository.GetCompanyByPrefixAsync(productData.CompanyPrefix);
+                var product = await _productsRepository.GetProductByCompanyAndItemReferenceAsync(company.Id, productData.ItemReference);
 
                 //ToDo: Handle errors above
 
-                newInventory.Products.Add(product);
+                if (!productsDictionary.TryGetValue(product.Id, out int _))
+                {
+                    productsDictionary.Add(product.Id, 1);
+                }
+                else
+                {
+                    productsDictionary[product.Id]++;
+                }
+            }
+
+            foreach (var productCounter in productsDictionary)
+            {
+                newInventory.InventoryProducts.Add(new InventoryProduct
+                {
+                    ProductId = productCounter.Key,
+                    Count = productCounter.Value
+                });
             }
 
             var newInventoryEntity = await _inventoriesRepository.AddAsync(newInventory);
@@ -68,7 +85,7 @@ namespace InventoryManagement.Application
 
         public async Task<ICollection<ProductsCountForCompanyModel>> GetProductsCountPerCompanyAsync()
         {
-            var result = await _productsRepository.GetProductsCountPerCompanyAsync();
+            var result = _productsRepository.GetProductsCountPerCompany();
 
             return result.Select(x => new ProductsCountForCompanyModel
             {
@@ -79,7 +96,7 @@ namespace InventoryManagement.Application
 
         public async Task<ICollection<ProductsCountForDayPerProductModel>> GetProductsCountPerDayPerProductAsync()
         {
-            var result = await _productsRepository.GetProductsCountPerDayPerProductAsync();
+            var result = _productsRepository.GetProductsCountPerDayPerProduct();
 
             return result.Select(x => new ProductsCountForDayPerProductModel
             {
@@ -94,12 +111,14 @@ namespace InventoryManagement.Application
 
         public async Task<ICollection<ProductCountModel>> GetProductsCountPerProductByInventoryExternalIdAsync(string externalInventoryId)
         {
-            var inventoryId = await _inventoriesRepository.GetInventoryByExternalIdAsync(externalInventoryId);
-            var result = await _productsRepository.GetProductsCountPerProductByInventoryExternalIdAsync();
+            var inventory = await _inventoriesRepository.GetInventoryByExternalIdAsync(externalInventoryId);
+            //ToDo: Handle null here
+
+            var result = _productsRepository.GetProductsCountPerProductByInventoryId(inventory.Id);
 
             return result.Select(x => new ProductCountModel
             {
-                ProductModel = ObjectMapper.Mapper.Map<ProductModel>(x),
+                ProductModel = ObjectMapper.Mapper.Map<ProductModel>(x.Key),
                 Count = x.Value
             }).ToArray();
         }

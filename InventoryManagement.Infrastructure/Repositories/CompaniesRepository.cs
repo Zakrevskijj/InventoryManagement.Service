@@ -1,5 +1,6 @@
 ﻿using InventoryManagement.Core.Entities;
 using InventoryManagement.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Infrastructure.Repositories
 {
@@ -9,9 +10,10 @@ namespace InventoryManagement.Infrastructure.Repositories
         {
         }
 
-        public Task<Company> GetCompanyByPrefixAsync(int companyPrefix)
+        public async Task<Company> GetCompanyByPrefixAsync(int companyPrefix)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Companies
+                .FirstOrDefaultAsync(x => x.Prefix == companyPrefix);
         }
     }
 }
