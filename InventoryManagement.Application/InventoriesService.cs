@@ -66,24 +66,42 @@ namespace InventoryManagement.Application
             return new ProductData(int.Parse(arr[1]), int.Parse(arr[2]));
         }
 
-        public Task<ICollection<ProductsCountForCompanyModel>> GetProductsCountPerCompany()
+        public async Task<ICollection<ProductsCountForCompanyModel>> GetProductsCountPerCompanyAsync()
         {
-            throw new NotImplementedException();
+            var result = await _productsRepository.GetProductsCountPerCompanyAsync();
+
+            return result.Select(x => new ProductsCountForCompanyModel
+            {
+                CompanyModel = ObjectMapper.Mapper.Map<CompanyModel>(x),
+                Count = x.Value
+            }).ToArray();
         }
 
-        public Task<ICollection<ProductsCountForDayPerProductModel>> GetProductsCountPerDayPerProduct()
+        public async Task<ICollection<ProductsCountForDayPerProductModel>> GetProductsCountPerDayPerProductAsync()
         {
-            throw new NotImplementedException();
+            var result = await _productsRepository.GetProductsCountPerDayPerProductAsync();
+
+            return result.Select(x => new ProductsCountForDayPerProductModel
+            {
+                Date = x.Key,
+                Products = x.Value.Select(y => new ProductCountModel
+                {
+                    ProductModel = ObjectMapper.Mapper.Map<ProductModel>(y.Key),
+                    Count = y.Value
+                }).ToArray()
+            }).ToArray();
         }
 
-        public Task<ICollection<ProductCountModel>> GetProductsCountPerProductByInventoryExternalId(string externalInventoryId)
+        public async Task<ICollection<ProductCountModel>> GetProductsCountPerProductByInventoryExternalIdAsync(string externalInventoryId)
         {
-            throw new NotImplementedException();
-        }
+            var inventoryId = await _inventoriesRepository.GetInventoryByExternalIdAsync(externalInventoryId);
+            var result = await _productsRepository.GetProductsCountPerProductByInventoryExternalIdAsync();
 
-        public Task ProcessInventoryDataAsync(InventoryModel inventoryModel, ICollection<string> productTags)
-        {
-            throw new NotImplementedException();
+            return result.Select(x => new ProductCountModel
+            {
+                ProductModel = ObjectMapper.Mapper.Map<ProductModel>(x),
+                Count = x.Value
+            }).ToArray();
         }
 
         private async Task ValidateIfInventoryExists(InventoryModel inventoryModel)

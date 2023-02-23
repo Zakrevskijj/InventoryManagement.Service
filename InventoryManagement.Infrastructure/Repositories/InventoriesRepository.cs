@@ -8,5 +8,10 @@ namespace InventoryManagement.Infrastructure.Repositories
         public InventoriesRepository(InventoryContext dbContext) : base(dbContext)
         {
         }
+
+        public Task<Inventory> GetInventoryByExternalIdAsync(string externalId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

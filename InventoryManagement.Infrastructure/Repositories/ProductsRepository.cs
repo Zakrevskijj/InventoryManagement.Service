@@ -13,5 +13,20 @@ namespace InventoryManagement.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<IDictionary<Company, int>> GetProductsCountPerCompanyAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDictionary<DateTime, IDictionary<Product, int>>> GetProductsCountPerDayPerProductAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDictionary<Product, int>> GetProductsCountPerProductByInventoryExternalIdAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
