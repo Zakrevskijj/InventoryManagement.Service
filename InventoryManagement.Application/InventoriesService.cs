@@ -37,20 +37,30 @@ namespace InventoryManagement.Application
             var productsDictionary = new Dictionary<int, int>();
             foreach (var tag in productTags)
             {
-                var productData = FetchProductData(tag);
-
-                var company = await _companiesRepository.GetCompanyByPrefixAsync(productData.CompanyPrefix);
-                var product = await _productsRepository.GetProductByCompanyAndItemReferenceAsync(company.Id, productData.ItemReference);
-
-                //ToDo: Handle errors above
-
-                if (!productsDictionary.TryGetValue(product.Id, out int _))
+                //ToDo: Handle errors here
+                try
                 {
-                    productsDictionary.Add(product.Id, 1);
+                    var productData = FetchProductData(tag);
+
+                    var company = await _companiesRepository.GetCompanyByPrefixAsync(productData.CompanyPrefix);
+                    if (company == null)
+                    {
+                        throw new Exception("Unable to fing company by prefix");
+                    }
+                    var product = await _productsRepository.GetProductByCompanyAndItemReferenceAsync(company.Id, productData.ItemReference);
+
+                    if (!productsDictionary.TryGetValue(product.Id, out int _))
+                    {
+                        productsDictionary.Add(product.Id, 1);
+                    }
+                    else
+                    {
+                        productsDictionary[product.Id]++;
+                    }
                 }
-                else
+                catch
                 {
-                    productsDictionary[product.Id]++;
+                    //Log here
                 }
             }
 
@@ -80,7 +90,7 @@ namespace InventoryManagement.Application
             tagData = tagData.Remove(0, 21);
             var arr = tagData.Split('.');
 
-            return new ProductData(int.Parse(arr[1]), int.Parse(arr[2]));
+            return new ProductData(long.Parse(arr[1]), long.Parse(arr[2]));
         }
 
         public async Task<ICollection<ProductsCountForCompanyModel>> GetProductsCountPerCompanyAsync()
@@ -137,10 +147,10 @@ namespace InventoryManagement.Application
 
     internal class ProductData
     {
-        public int CompanyPrefix { get; }
-        public int ItemReference { get; }
+        public long CompanyPrefix { get; }
+        public long ItemReference { get; }
 
-        public ProductData(int companyPrefix, int itemReference)
+        public ProductData(long companyPrefix, long itemReference)
         {
             CompanyPrefix = companyPrefix;
             ItemReference = itemReference;

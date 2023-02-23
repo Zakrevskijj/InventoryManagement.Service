@@ -10,7 +10,7 @@ namespace InventoryManagement.Infrastructure.Repositories
         {
         }
 
-        public async Task<Product> GetProductByCompanyAndItemReferenceAsync(int companyId, int itemReference)
+        public async Task<Product> GetProductByCompanyAndItemReferenceAsync(int companyId, long itemReference)
         {
             return await _dbContext.Products
                .FirstOrDefaultAsync(x => x.CompanyId == companyId && x.ItemReference == itemReference);

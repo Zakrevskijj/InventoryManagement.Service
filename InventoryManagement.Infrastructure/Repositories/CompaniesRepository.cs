@@ -10,7 +10,7 @@ namespace InventoryManagement.Infrastructure.Repositories
         {
         }
 
-        public async Task<Company> GetCompanyByPrefixAsync(int companyPrefix)
+        public async Task<Company> GetCompanyByPrefixAsync(long companyPrefix)
         {
             return await _dbContext.Companies
                 .FirstOrDefaultAsync(x => x.Prefix == companyPrefix);

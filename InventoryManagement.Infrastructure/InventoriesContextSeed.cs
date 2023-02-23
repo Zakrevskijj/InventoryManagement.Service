@@ -10,7 +10,7 @@ namespace InventoryManagement.Infrastructure
         {
             try
             {
-                // Uncomment for real DB case
+                // Uncomment for real DB case (not in-mem)
                 inventoryContext.Database.Migrate();
                 inventoryContext.Database.EnsureCreated();
 
