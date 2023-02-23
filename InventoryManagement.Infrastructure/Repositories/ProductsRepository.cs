@@ -1,7 +1,6 @@
 ﻿using InventoryManagement.Core.Entities;
 using InventoryManagement.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.Design;
 
 namespace InventoryManagement.Infrastructure.Repositories
 {

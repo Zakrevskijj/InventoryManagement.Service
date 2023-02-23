@@ -20,6 +20,7 @@ namespace InventoryManagement.Api
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
+
             // InMem DB
             //services.AddDbContext<InventoryContext>(c =>
             //    c.UseInMemoryDatabase("DbConnection"));
@@ -38,7 +39,10 @@ namespace InventoryManagement.Api
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IInventoriesService, InventoriesService>();
 
+
             var app = builder.Build();
+
+            SeedDatabase(app);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -55,6 +59,25 @@ namespace InventoryManagement.Api
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void SeedDatabase(WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var inventoryContext = services.GetRequiredService<InventoryContext>();
+                    var productService = services.GetRequiredService<IProductsService>();
+                    InventoryContextSeed.SeedAsync(inventoryContext, productService).Wait();
+                }
+                catch (Exception exception)
+                {
+                    //Log here
+                }
+            }
         }
     }
 }
