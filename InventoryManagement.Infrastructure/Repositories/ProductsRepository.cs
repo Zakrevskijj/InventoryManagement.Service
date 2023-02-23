@@ -19,15 +19,22 @@ namespace InventoryManagement.Infrastructure.Repositories
 
         public IDictionary<Company, int> GetProductsCountPerCompany()
         {
-            var results = _dbContext.Products
-                .Include(x => x.Company)
-                .GroupBy(x => x.Company)
+            var results = _dbContext.InventoryProducts
+                .Include(x => x.Product.Company)
+                .GroupBy(x => x.Product.Company)
                 .ToList();
 
             var resultsDictionary = new Dictionary<Company, int>();
             foreach (var companyProductGroup in results)
             {
-                resultsDictionary.Add(companyProductGroup.FirstOrDefault().Company, companyProductGroup.Count());
+                var company = companyProductGroup.Key;
+                int companyProductsCounter = 0;
+
+                foreach (var inventoryProduct in companyProductGroup)
+                {
+                    companyProductsCounter += inventoryProduct.Count;
+                }
+                resultsDictionary.Add(company, companyProductsCounter);
             }
 
             return resultsDictionary;
@@ -35,19 +42,19 @@ namespace InventoryManagement.Infrastructure.Repositories
 
         public IDictionary<DateTime, IDictionary<Product, int>> GetProductsCountPerDayPerProduct()
         {
-            //var results = _dbContext.Products
-            //    .Include(x => x.Company)
-            //   .GroupBy(x => x.Company)
-            //   .ToList();
+            var results = _dbContext.InventoryProducts
+                .Include(x => x.Product)
+                .Include(x => x.Inventory)
+                .GroupBy(x => x.Inventory.DateTimeUtc)
+                .ToList();
 
-            //var resultsDictionary = new Dictionary<Company, int>();
-            //foreach (var companyProductGroup in results)
-            //{
-            //    resultsDictionary.Add(companyProductGroup.FirstOrDefault().Company, companyProductGroup.Count());
-            //}
+            var resultsDictionary = new Dictionary<DateTime, IDictionary<Product, int>>();
+            foreach (var companyProductGroup in results)
+            {
+                //resultsDictionary.Add(companyProductGroup.FirstOrDefault().Company, companyProductGroup.Count());
+            }
 
-            //return resultsDictionary;
-            throw new NotImplementedException();
+            return resultsDictionary;
         }
 
         public IDictionary<Product, int> GetProductsCountPerProductByInventoryId(int inventoryId)

@@ -89,7 +89,7 @@ namespace InventoryManagement.Application
 
             return result.Select(x => new ProductsCountForCompanyModel
             {
-                CompanyModel = ObjectMapper.Mapper.Map<CompanyModel>(x),
+                CompanyModel = ObjectMapper.Mapper.Map<CompanyModel>(x.Key),
                 Count = x.Value
             }).ToArray();
         }
