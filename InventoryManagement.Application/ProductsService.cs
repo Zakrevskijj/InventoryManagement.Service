@@ -23,7 +23,7 @@ namespace InventoryManagement.Application
             if (newProduct == null)
             {
                 //ToDo: Throw good exception here
-                throw new Exception($"Unable to map");
+                throw new ApplicationException($"Unable to map");
             }
 
             var newProductEntity = await _productsRepository.AddAsync(newProduct);
@@ -39,7 +39,7 @@ namespace InventoryManagement.Application
             if (existingEntity != null)
             {
                 //ToDo: Throw good exception here
-                throw new Exception($"{productModel} with this id already exists");
+                throw new ApplicationException($"{productModel} with this id already exists");
             }
         }
     }
