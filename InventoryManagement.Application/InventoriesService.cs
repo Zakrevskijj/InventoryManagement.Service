@@ -93,7 +93,7 @@ namespace InventoryManagement.Application
             return new ProductData(long.Parse(arr[1]), long.Parse(arr[2]));
         }
 
-        public async Task<ICollection<ProductsCountForCompanyModel>> GetProductsCountPerCompanyAsync()
+        public ICollection<ProductsCountForCompanyModel> GetProductsCountPerCompany()
         {
             var result = _productsRepository.GetProductsCountPerCompany();
 
@@ -104,7 +104,7 @@ namespace InventoryManagement.Application
             }).ToArray();
         }
 
-        public async Task<ICollection<ProductsCountForDayPerProductModel>> GetProductsCountPerDayPerProductAsync()
+        public ICollection<ProductsCountForDayPerProductModel> GetProductsCountPerDayPerProduct()
         {
             var result = _productsRepository.GetProductsCountPerDayPerProduct();
 

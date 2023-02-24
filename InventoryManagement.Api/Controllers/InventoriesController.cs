@@ -50,7 +50,7 @@ namespace InventoryManagement.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<ICollection<ProductsCountForDayPerProductModel>>> GetProductsCountForDayPerProductModel()
         {
-            var result = await _inventoriesService.GetProductsCountPerDayPerProductAsync();
+            var result = _inventoriesService.GetProductsCountPerDayPerProduct();
 
             return Ok(result);
         }
@@ -61,7 +61,7 @@ namespace InventoryManagement.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<ICollection<ProductsCountForCompanyModel>>> GetProductsCountPerCompany()
         {
-            var result = await _inventoriesService.GetProductsCountPerCompanyAsync();
+            var result = _inventoriesService.GetProductsCountPerCompany();
 
             return Ok(result);
         }
