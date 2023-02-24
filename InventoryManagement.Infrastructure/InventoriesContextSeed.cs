@@ -14,9 +14,11 @@ namespace InventoryManagement.Infrastructure
                 inventoryContext.Database.Migrate();
                 inventoryContext.Database.EnsureCreated();
 
+                var str = Directory.GetCurrentDirectory();
+
                 if (!inventoryContext.Products.Any())
                 {
-                    var productsFromFile = File.ReadAllLines("..\\InventoryManagement.Infrastructure\\data.csv");
+                    var productsFromFile = File.ReadAllLines("data.csv");
                     for (var i = 1; i < productsFromFile.Length; i++)
                     {
                         var productFields = productsFromFile[i].Split(';');
