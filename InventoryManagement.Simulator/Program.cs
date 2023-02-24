@@ -5,6 +5,9 @@ namespace InventoryManagement.Tests
 {
     internal class Program
     {
+        //https://inventory-management-api.azurewebsites.net
+        private const string BaseUrl = "https://localhost:7224";
+
         static void Main(string[] args)
         {
             var tags = File.ReadAllLines("..\\..\\..\\tags.txt");
@@ -29,7 +32,7 @@ namespace InventoryManagement.Tests
                 }
 
                 HttpClient client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7224/inventories");
+                var request = new HttpRequestMessage(HttpMethod.Post, BaseUrl + "/inventories");
                 request.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
                 client.Send(request);
 
